@@ -1,0 +1,142 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - rename_columns_to_en
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: Download_csv
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: download_csv
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - new_column_time_elapsed_pd_ccd
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: Rename_columns_to_en
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - download_csv
+  uuid: rename_columns_to_en
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - replace_null_in_centralized_procedure
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: new_column_time_elapsed_pd_ccd
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - rename_columns_to_en
+  uuid: new_column_time_elapsed_pd_ccd
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - split_execution_location
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: replace_null_in_centralized_procedure
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - new_column_time_elapsed_pd_ccd
+  uuid: replace_null_in_centralized_procedure
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - load_to_gcs
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: split_execution_location
+  retry_config: null
+  status: updated
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - replace_null_in_centralized_procedure
+  uuid: split_execution_location
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - trigger_pipe_to_bq
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: load_to_gcs
+  retry_config: null
+  status: updated
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - split_execution_location
+  uuid: load_to_gcs
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: trigger_pipe_to_bq
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - load_to_gcs
+  uuid: trigger_pipe_to_bq
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2024-04-12 14:39:08.871347+00:00'
+data_integration: null
+description: null
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: url_to_gcs
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: url_to_gcs
+variables_dir: /home/src/mage_data/transparencyportal
+widgets: []
