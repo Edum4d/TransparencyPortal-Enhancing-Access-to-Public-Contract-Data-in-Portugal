@@ -71,11 +71,11 @@ The project workflow involved the following steps:
      6. Create a partitioned and clustered fact table in BigQuery.
    ![Pipeline 3 - dbt_run](images/pipeline_3.jpg)
 
-4. **Pipeline 4 - Looker Report**:
+4. **Pipeline 4 - [Looker Report](https://lookerstudio.google.com/reporting/33c3a880-4602-4cf2-842f-4312d7dbfc56)**:
    - **Steps**:
      1. Generate a Looker report/dashboard using the partitioned and clustered fact table in BigQuery.
-   ![Looker Report](images/report.jpg)~
-   [Dashboard](https://lookerstudio.google.com/reporting/33c3a880-4602-4cf2-842f-4312d7dbfc56)
+   ![Looker Report](images/report.jpg)
+
 
 
 **Triggers for Data Updates:**
