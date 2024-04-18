@@ -153,11 +153,20 @@ This Terraform configuration provisions resources on Google Cloud Platform (GCP)
 3. **Terraform Installed**: Make sure you have Terraform installed on your machine. You can download it from [Terraform's official website](https://www.terraform.io/downloads.html).
 
 
-
-
-
 ## Reproducibility Steps
 
+Navigate to the Google Cloud dashboard and create a new project named "transparency_portugal" or any preferred name. You'll locate the option to commence a new project within the dropdown menu positioned at the top left corner of the screen, adjacent to the "Google Cloud Platform" text.
+
+Once your project is created, configure a Service Account with precise roles assigned. Make certain that the Service Account possesses the subsequent roles:
+
+- BigQuery Admin
+- Storage Admin
+- Storage Object Admin
+- Viewer
+- Storage Environment and Object Administrator
+- BigQuery Resource Administrator
+- Storage Transfer Administrator
+- BigQuery Connection Admin
 
 ### 1. Clone the Repository and Navigate to the Terraform Directory
 
@@ -245,7 +254,7 @@ Update the following variables:
 - `STORAGE_BUCKET_NAME`: Change to `gcs_bucket_name` to match the Terraform variable.
 - `BIGQUERY_DATASET_NAME`: Change to `bq_dataset_name` to match the Terraform variable.
 - `GCLOUD_PROJECT_NAME`: Change to `project` to match the Terraform variable.
-
+- `SERVER_LOC`: Change to `location` to match the Terraform variable.
 
 Ensure that the credentials match to avoid any authentication issues during project execution.
 
