@@ -142,14 +142,8 @@ Additionally, the dashboard features interactive filters, allowing users to expl
 17. **centralized_procedure**: Indicates if the procurement process was centralized.
 18. **framework_agreement_description**: Description of any framework agreement associated with the contract.
 
-**Description**: Public Contracts of 2024 - Information registered on the BASE Portal at www.base.gov.pt by the Contracting Authorities (directly and/or through Electronic Platforms).
-
 Note: The data is primarily in Portuguese.
 
-
-# Terraform Configuration for Google Cloud Platform
-
-This Terraform configuration provisions resources on Google Cloud Platform (GCP), including Google Cloud Storage buckets and BigQuery datasets.
 
 ## Prerequisites
 
@@ -182,7 +176,7 @@ git clone https://github.com/Edum4d/TransparencyPortal-Enhancing-Access-to-Publi
 ```
 ### 2. Place Your GCP Credentials File
 
-Before proceeding, ensure you place your Google Cloud Platform (GCP) service account credentials file within a directory of the project. For example, create a directory named `keys` within the `terraform` directory and place your credentials file there. 
+Before proceeding, ensure you place your Google Cloud Platform (GCP) service account credentials file within a directory of the project. For example, create a directory named `secrets` within the `terraform` directory and place your credentials file there. 
 
 ```
 cd terraform
