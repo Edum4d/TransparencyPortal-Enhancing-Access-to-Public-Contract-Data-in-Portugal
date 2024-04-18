@@ -1,5 +1,6 @@
 # TransparencyPortal: Enhancing Access to Public Contract Data in Portugal
 
+**[TransparencyPortal Report](https://lookerstudio.google.com/reporting/33c3a880-4602-4cf2-842f-4312d7dbfc56)**
 
 ### Project Description:
 
