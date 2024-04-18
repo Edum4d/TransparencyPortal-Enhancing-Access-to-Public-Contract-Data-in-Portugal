@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: staging
     database: transparencyportal-420117
-    schema: final_project
+    schema: "{{ env_var('BIGQUERY_DATASET_NAME') }}"
 
     tables:
       

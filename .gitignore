@@ -13,12 +13,14 @@ develop-eggs/
 dist/
 downloads/
 eggs/
+terraform/secrets/*
 .eggs/
 lib/
 lib64/
 parts/
 sdist/
 var/
+mage_transparencyportal/secrets/*
 wheels/
 pip-wheel-metadata/
 share/python-wheels/

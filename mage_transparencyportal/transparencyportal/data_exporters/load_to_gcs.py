@@ -7,9 +7,9 @@ from os import path
 if 'data_exporter' not in globals():
     from mage_ai.data_preparation.decorators import data_exporter
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS']="/home/src/env/transparencyportal-420117-da1b5becf6d6.json"
-bucket_name = 'transparencyportal'
-project_id= 'transparencyportal-420117'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS']=os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
+bucket_name = os.environ.get('STORAGE_BUCKET_NAME')
+project_id= os.environ.get('GCLOUD_PROJECT_NAME')
 
 table_name="data"
 
@@ -41,11 +41,14 @@ def export_data_to_google_cloud_storage(df: DataFrame, **kwargs) -> None:
     df['partition'] = df['year'] + '-' + df['month']
     df.drop(columns=['year', 'month'], inplace=True)
 
-    # Write the Parquet files partitioned by year and month
-    pq.write_to_dataset(
-        pa.Table.from_pandas(df),
-        root_path=root_path,
-        partition_cols=['partition'],
-        filesystem=gcs,
-        basename_template='contracts-{partition}.parquet'
-    )
+    output_dir = root_path
+
+    # Write the Parquet files with partition in the filename
+    for partition_value, partition_df in df.groupby('partition'):
+            partition_filename = f'contracts-{partition_value}.parquet'
+            # Write partitioned Parquet files
+            pq.write_table(
+                table=pa.Table.from_pandas(partition_df),
+                where=f"{root_path}/{partition_filename}",
+                filesystem=gcs
+            )

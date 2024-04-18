@@ -43,7 +43,8 @@ def transform(data, *args, **kwargs):
     
     # Rename columns
     data = data.rename(columns=column_translations)
-
+    data['publication_date'] = pd.to_datetime(data['publication_date'])
+    data['contract_conclusion_date'] = pd.to_datetime(data['contract_conclusion_date'])
     return data
 
 @test

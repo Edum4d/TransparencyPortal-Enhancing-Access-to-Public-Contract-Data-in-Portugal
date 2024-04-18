@@ -28,7 +28,7 @@ def transform(data, *args, **kwargs):
     data = data[data["execution_location"].apply(lambda x: len(x.split(','))) >= 2]
 
     # Split 'execution_location' column and assign new columns directly
-    data[['country', 'city', 'parasity']] = data['execution_location'].apply(lambda x: x.split(',') + [''] * (3 - len(x.split(',')))).apply(pd.Series)
+    data[['country', 'district', 'city']] = data['execution_location'].apply(lambda x: x.split(',') + [''] * (3 - len(x.split(',')))).apply(pd.Series)
     # Drop the original 'execution_location' column
     data.drop('execution_location', axis=1, inplace=True)
 

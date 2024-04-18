@@ -15,9 +15,9 @@ renamed AS (
         {{ dbt.safe_cast("contract_price", api.Column.translate_type("numeric")) }} AS contract_price,
         cpv_code AS cpv_code,
         {{ dbt.safe_cast("execution_period", api.Column.translate_type("integer")) }} AS execution_period,
-        country AS country,
-        district AS district,
-        city AS city,
+        TRIM(country) AS country,
+        TRIM(district) AS district,
+        TRIM(city) AS city,
         justification AS justification,
         centralized_procedure AS centralized_procedure,
         framework_agreement_description AS framework_agreement_description
@@ -26,7 +26,7 @@ renamed AS (
 SELECT 
     contract_id,
     notice_number,
-    split_column AS contract_type,
+    TRIM(split_column) AS contract_type,
     procedure_type,
     contract_object,
     contracting_authority,

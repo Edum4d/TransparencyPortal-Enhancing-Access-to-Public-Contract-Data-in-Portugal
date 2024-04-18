@@ -3,11 +3,12 @@ from mage_ai.io.bigquery import BigQuery
 from mage_ai.io.config import ConfigFileLoader
 from pandas import DataFrame
 from os import path
-
+import os
 if 'data_exporter' not in globals():
     from mage_ai.data_preparation.decorators import data_exporter
 
-
+GCLOUD_PROJECT_NAME=os.environ.get('GCLOUD_PROJECT_NAME')
+BIGQUERY_DATASET_NAME=os.environ.get('BIGQUERY_DATASET_NAME')
 @data_exporter
 def export_data_to_big_query(df: DataFrame, **kwargs) -> None:
     """
@@ -16,7 +17,7 @@ def export_data_to_big_query(df: DataFrame, **kwargs) -> None:
 
     Docs: https://docs.mage.ai/design/data-loading#bigquery
     """
-    table_id = 'transparencyportal-420117.final_project.test1'
+    table_id = f'{GCLOUD_PROJECT_NAME}.{BIGQUERY_DATASET_NAME}.test1'
     config_path = path.join(get_repo_path(), 'io_config.yaml')
     config_profile = 'default'
 

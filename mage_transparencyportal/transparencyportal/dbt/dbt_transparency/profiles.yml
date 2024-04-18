@@ -1,0 +1,15 @@
+# https://docs.getdbt.com/docs/core/connect-data-platform/profiles.yml
+
+dbt_transparency:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      keyfile: "{{ env_var('GOOGLE_APPLICATION_CREDENTIALS') }}" 
+      project: "{{ env_var('GCLOUD_PROJECT_NAME') }}" 
+      dataset: "{{ env_var('BIGQUERY_DATASET_NAME') }}"
+      threads: 1
+      timeout_seconds: 300
+      location: US
+      priority: interactive

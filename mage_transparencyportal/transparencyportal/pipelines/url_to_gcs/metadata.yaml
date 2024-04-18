@@ -19,7 +19,7 @@ blocks:
   color: null
   configuration: {}
   downstream_blocks:
-  - new_column_time_elapsed_pd_ccd
+  - replace_null_in_centralized_procedure
   executor_config: null
   executor_type: local_python
   has_callback: false
@@ -36,23 +36,6 @@ blocks:
   color: null
   configuration: {}
   downstream_blocks:
-  - replace_null_in_centralized_procedure
-  executor_config: null
-  executor_type: local_python
-  has_callback: false
-  language: python
-  name: new_column_time_elapsed_pd_ccd
-  retry_config: null
-  status: executed
-  timeout: null
-  type: transformer
-  upstream_blocks:
-  - rename_columns_to_en
-  uuid: new_column_time_elapsed_pd_ccd
-- all_upstream_blocks_executed: true
-  color: null
-  configuration: {}
-  downstream_blocks:
   - split_execution_location
   executor_config: null
   executor_type: local_python
@@ -64,7 +47,7 @@ blocks:
   timeout: null
   type: transformer
   upstream_blocks:
-  - new_column_time_elapsed_pd_ccd
+  - rename_columns_to_en
   uuid: replace_null_in_centralized_procedure
 - all_upstream_blocks_executed: true
   color: null

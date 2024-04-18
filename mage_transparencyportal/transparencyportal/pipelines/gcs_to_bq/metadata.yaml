@@ -10,29 +10,46 @@ blocks:
   language: python
   name: get_from_gcs
   retry_config: null
-  status: executed
+  status: updated
   timeout: null
   type: data_loader
   upstream_blocks: []
   uuid: get_from_gcs
-- all_upstream_blocks_executed: true
+- all_upstream_blocks_executed: false
   color: null
   configuration:
     file_source:
       path: data_exporters/load_to_bq.py
-  downstream_blocks: []
+  downstream_blocks:
+  - call_dbt
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
   name: load_to_bq
   retry_config: null
-  status: executed
+  status: updated
   timeout: null
   type: data_exporter
   upstream_blocks:
   - get_from_gcs
   uuid: load_to_bq
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: call_dbt
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - load_to_bq
+  uuid: call_dbt
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}

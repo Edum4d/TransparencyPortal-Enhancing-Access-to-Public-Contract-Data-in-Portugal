@@ -19,10 +19,10 @@ def load_from_google_cloud_storage(*args, **kwargs):
 
     Docs: https://docs.mage.ai/design/data-loading#googlecloudstorage
     """
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/src/env/transparencyportal-420117-a63d0e28ae3a.json"
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
     config_path = path.join(get_repo_path(), 'io_config.yaml')
     config_profile = 'default'
-    bucket_name = 'transparencyportal'
+    bucket_name = os.environ.get('STORAGE_BUCKET_NAME')
     object_key = 'data'
     client = storage.Client()
     bucket = client.bucket(bucket_name)
