@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: staging
+    database: transparencyportal-420117
+    schema: final_project
+
+    tables:
+      
+      - name: test1
