@@ -36,17 +36,20 @@ The project workflow involved the following steps:
         - 2.2 Rename columns to English.
         - 2.3 Handle contracts spanning multiple cities, with multiple cities listed in a single row for a contract ID.
      3. Send data to Google Cloud Storage.
+
     ![Pipeline 1 - url_to_gcs](images/pipeline_1.jpg)
    - **Pipeline 2 - gcs_to_bq**:
      1. Retrieve data from Google Cloud Storage.
      2. Send the data to BigQuery.
      3. Trigger the dbt_run pipeline.
+
     ![Pipeline 2 - gcs_to_bq](images/pipeline_2.jpg)
    - **Pipeline 3 - dbt_run**:
      1. Data type treatment.
      2. Handle the contract type column, which has the same issue as the cities, i.e., multiple contract types for a single contract ID.
      3. Trim columns that need it.
      4. Create a partitioned and clustered fact table.
+     
      ![Pipeline 3 - gcs_to_bq](images/pipeline_3.jpg)
 
 ### Terraform Usage
