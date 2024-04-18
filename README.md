@@ -11,6 +11,7 @@ The dataset provided on our platform includes key features such as contract ID, 
 
 Our project aims to facilitate informed decision-making, enhance transparency, and bolster accountability in public spending. By supporting research and analysis on government contracts, we aspire to contribute to better governance and public service delivery in Portugal.
 
+Additionally, to ensure the data remains current and relevant, a pipeline will be triggered every Friday to update the dataset. This regular update process ensures that the platform reflects the latest information, as new contracts are often finalized or updated by the end of each week.
 
 ### Technologies
 
@@ -30,33 +31,59 @@ This project utilized the following tools:
 
 The project workflow involved the following steps:
 
-1. **Creating Pipelines**:
-   - **Pipeline 1 - url_to_gcs**:
+**Creating Pipelines**:
+
+1. **Pipeline 1 - url_to_gcs**:
+   - **Steps**:
      1. Get data from URLs.
      2. Clean the data.
-        - 2.1 Convert columns to the correct data types.
-        - 2.2 Rename columns to English.
-        - 2.3 Handle contracts spanning multiple cities, with multiple cities listed in a single row for a contract ID.
+        - Convert columns to the correct data types.
+        - Rename columns to English.
+        - Handle contracts spanning multiple cities, with multiple cities listed in a single row for a contract ID.
      3. Send data to Google Cloud Storage.
+   - ![Pipeline 1 - url_to_gcs](images/pipeline_1.jpg)
 
-    ![Pipeline 1 - url_to_gcs](images/pipeline_1.jpg)
-   - **Pipeline 2 - gcs_to_bq**:
+2. **Pipeline 2 - gcs_to_bq**:
+   - **Steps**:
      1. Retrieve data from Google Cloud Storage.
      2. Send the data to BigQuery.
      3. Trigger the dbt_run pipeline.
+   - ![Pipeline 2 - gcs_to_bq](images/pipeline_2.jpg)
 
-    ![Pipeline 2 - gcs_to_bq](images/pipeline_2.jpg)
-   - **Pipeline 3 - dbt_run**:
+3. **Pipeline 3 - dbt_run**:
+   - **Steps**:
      1. Data type treatment.
      2. Handle the contract type column, which has the same issue as the cities, i.e., multiple contract types for a single contract ID.
      3. Trim columns that need it.
-     4. Create a partitioned and clustered fact table.
+     4. Create a partitioned and clustered fact table in BigQuery.
+   - ![Pipeline 3 - dbt_run](images/pipeline_3.jpg)
 
-     ![Pipeline 3 - gcs_to_bq](images/pipeline_3.jpg)
+4. **Pipeline 4 - Looker Report**:
+   - **Steps**:
+     1. Generate a Looker report/dashboard using the partitioned and clustered fact table in BigQuery.
+   - ![Looker Report](images/report.jpg)
 
-### Terraform Usage
 
-Terraform was utilized to provision the necessary resources on Google Cloud Platform (GCP). After setup, MageAI was used for easy setup and orchestration of all pipelines.
+**Triggers for Data Updates:**
+
+1. **Weekly Trigger:**
+   - Initiated every Friday to update the dataset.
+   - Reasoning: Scheduled to accommodate the typical pattern of new contracts or updates occurring by the end of each week, ensuring regular and timely updates without overwhelming the system.
+
+2. **Manual Trigger:**
+   - Activated by users/administrators upon knowledge of dataset updates.
+   - Reasoning: Offers flexibility and control for immediate synchronization in response to unexpected changes or critical events, ensuring the dataset reflects the latest information.
+
+## Dashboard Explanation
+
+If you wish to access the final dashboard, you can find the link [here](https://lookerstudio.google.com/reporting/33c3a880-4602-4cf2-842f-4312d7dbfc56).
+If for any reason you are unable to access the dashboard, GitHub includes a PDF named "Transparency_Portal_Portugal" containing the dashboard.
+The dashboard comprises two primary charts aimed at providing insights into public contract expenditure:
+
+1. **Partitioning**: The fact table is partitioned based on the date of publication of contracts. This partitioning scheme aligns with the primary filtering criterion for the Looker dashboard, as users typically filter contracts by their publication date. Since contracts are usually added to the system upon publication, partitioning by publication date enhances query performance and efficiency.
+
+2. **Clustering**: Clustering is implemented on the contract type column. This column often exhibits repeated values, as multiple contract types can be associated with a single contract ID. By clustering on this column, data retrieval and analysis related to contract types are optimized, improving the overall performance of queries and reports generated through Looker.
+
 
 # Terraform Configuration for Google Cloud Platform
 
@@ -68,11 +95,7 @@ This Terraform configuration provisions resources on Google Cloud Platform (GCP)
 2. **Service Account**: Create a service account and download the JSON key file. Ensure that this service account has the necessary permissions to create resources like Google Cloud Storage buckets and BigQuery datasets.
 3. **Terraform Installed**: Make sure you have Terraform installed on your machine. You can download it from [Terraform's official website](https://www.terraform.io/downloads.html).
 
-## Dashboard Explanation
 
-If you wish to access the final dashboard, you can find the link [here](https://lookerstudio.google.com/reporting/33c3a880-4602-4cf2-842f-4312d7dbfc56).
-If for any reason you are unable to access the dashboard, GitHub includes a PDF named "Transparency_Portal_Portugal" containing the dashboard.
-The dashboard comprises two primary charts aimed at providing insights into public contract expenditure:
 
 1. **Contract Expenditure by Type:**
    - **Goal:** This chart showcases the types of contracts that have incurred the highest expenditure in Portugal, offering a comprehensive overview of spending distribution across various contract categories.
@@ -210,22 +233,12 @@ Update the following variables in your `.env` file:
 ### Step 10: Run Pipeline
 
 To execute the entire pipeline, follow these steps:
+![Start Run Pipe](images/start_pipeline.gif)
 
-1. Open your terminal or command prompt.
-
-2. Enter the following command:
-
-    ```
-    mageai pipeline "url_to_gcs"
-    ```
-
-    Replace `"url_to_gcs"` with the actual URL to your Google Cloud Storage (GCS) where your pipeline configuration resides.
-
-3. Press Enter to execute the command.
-
-    #### Automated Trigger
-
-    A pipeline trigger is set to run automatically every Friday. 
+1. Access the Mage AI web interface by navigating to http://localhost:6789/ in your web browser.
+2. Click on the "url_to_gcs" pipeline.
+3. Click on the "Run@once" button and select "Run Now" to initiate the pipeline execution.
+4. Enter the necessary trigger details and monitor the pipeline's progress and results.
 
 ### Step 11: If you want to delete Cloud Resources (Optional)
 If you want to delete the resources created by Terraform, you can run:
