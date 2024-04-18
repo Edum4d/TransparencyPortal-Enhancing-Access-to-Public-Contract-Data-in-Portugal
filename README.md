@@ -41,14 +41,14 @@ The project workflow involved the following steps:
         - Rename columns to English.
         - Handle contracts spanning multiple cities, with multiple cities listed in a single row for a contract ID.
      3. Send data to Google Cloud Storage.
-   - ![Pipeline 1 - url_to_gcs](images/pipeline_1.jpg)
+   ![Pipeline 1 - url_to_gcs](images/pipeline_1.jpg)
 
 2. **Pipeline 2 - gcs_to_bq**:
    - **Steps**:
      1. Retrieve data from Google Cloud Storage.
      2. Send the data to BigQuery.
      3. Trigger the dbt_run pipeline.
-   - ![Pipeline 2 - gcs_to_bq](images/pipeline_2.jpg)
+   ![Pipeline 2 - gcs_to_bq](images/pipeline_2.jpg)
 
 3. **Pipeline 3 - dbt_run**:
    - **Steps**:
@@ -56,12 +56,13 @@ The project workflow involved the following steps:
      2. Handle the contract type column, which has the same issue as the cities, i.e., multiple contract types for a single contract ID.
      3. Trim columns that need it.
      4. Create a partitioned and clustered fact table in BigQuery.
-   - ![Pipeline 3 - dbt_run](images/pipeline_3.jpg)
+   ![Pipeline 3 - dbt_run](images/pipeline_3.jpg)
 
 4. **Pipeline 4 - Looker Report**:
    - **Steps**:
      1. Generate a Looker report/dashboard using the partitioned and clustered fact table in BigQuery.
-   - ![Looker Report](images/report.jpg)
+   ![Looker Report](images/report.jpg)~
+   [Dashboard](https://lookerstudio.google.com/reporting/33c3a880-4602-4cf2-842f-4312d7dbfc56)
 
 
 **Triggers for Data Updates:**
@@ -74,7 +75,7 @@ The project workflow involved the following steps:
    - Activated by users/administrators upon knowledge of dataset updates.
    - Reasoning: Offers flexibility and control for immediate synchronization in response to unexpected changes or critical events, ensuring the dataset reflects the latest information.
 
-## Dashboard Explanation
+## [Dashboard Explanation](https://lookerstudio.google.com/reporting/33c3a880-4602-4cf2-842f-4312d7dbfc56)
 
 If you wish to access the final dashboard, you can find the link [here](https://lookerstudio.google.com/reporting/33c3a880-4602-4cf2-842f-4312d7dbfc56).
 If for any reason you are unable to access the dashboard, GitHub includes a PDF named "Transparency_Portal_Portugal" containing the dashboard.
