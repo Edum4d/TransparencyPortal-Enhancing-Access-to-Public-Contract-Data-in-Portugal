@@ -1,0 +1,12 @@
+triggers:
+- envs: []
+  last_enabled_at: 2024-04-18 21:36:43.313647+00:00
+  name: Weekly run on friday
+  pipeline_uuid: url_to_gcs
+  schedule_interval: '@weekly'
+  schedule_type: time
+  settings: null
+  sla: null
+  start_time: 2024-04-20 18:59:00
+  status: active
+  variables: {}

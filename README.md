@@ -51,8 +51,9 @@ The project workflow involved the following steps:
      2. Clean the data.
         - Convert columns to the correct data types.
         - Rename columns to English.
-        - Handle contracts spanning multiple cities, with multiple cities listed in a single row for a contract ID.
+        - Handle contracts with multiple locations listed in a single row for a contract ID in the execution_location column. Additionally, split the execution_location into country, city, and district.
      3. Send data to Google Cloud Storage.
+     4. Trigger the gcs_to_bq pipeline.
    ![Pipeline 1 - url_to_gcs](images/pipeline_1.jpg)
 
 2. **Pipeline 2 - gcs_to_bq**:
@@ -65,7 +66,7 @@ The project workflow involved the following steps:
 3. **Pipeline 3 - dbt_run**:
    - **Steps**:
      1. Data type treatment.
-     2. Handle the contract type column, which has the same issue as the cities, i.e., multiple contract types for a single contract ID.
+     2. Handle the contract type column, which has the same issue as the locations, i.e., multiple contract types for a single contract ID.
      3. Trim columns that need it.
      4. Translate contract_type column to english.
      5. Replace message "NULL" with empty in columns
