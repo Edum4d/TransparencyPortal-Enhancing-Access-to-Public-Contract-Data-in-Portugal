@@ -89,6 +89,8 @@ The project workflow involved the following steps:
    - Activated by users/administrators upon knowledge of dataset updates.
    - Reasoning: Offers flexibility and control for immediate synchronization in response to unexpected changes or critical events, ensuring the dataset reflects the latest information.
 
+
+
 ## [Dashboard Explanation](https://lookerstudio.google.com/reporting/33c3a880-4602-4cf2-842f-4312d7dbfc56)
 
 If you wish to access the final dashboard, you can find the link [here](https://lookerstudio.google.com/reporting/33c3a880-4602-4cf2-842f-4312d7dbfc56).
@@ -99,6 +101,7 @@ The dashboard comprises two primary charts aimed at providing insights into publ
 
 2. **Clustering**: Clustering is implemented on the contract type column. This column often exhibits repeated values, as multiple contract types can be associated with a single contract ID. By clustering on this column, data retrieval and analysis related to contract types are optimized, improving the overall performance of queries and reports generated through Looker.
 
+### Dashboard Tiles
 1. **Contract Expenditure by Type:**
    - **Goal:** This chart showcases the types of contracts that have incurred the highest expenditure in Portugal, offering a comprehensive overview of spending distribution across various contract categories.
    - **Objective:** To provide stakeholders with a clear understanding of where public funds are allocated across different types of contracts, fostering transparency in government spending.
