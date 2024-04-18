@@ -13,6 +13,17 @@ Our project aims to facilitate informed decision-making, enhance transparency, a
 
 Additionally, to ensure the data remains current and relevant, a pipeline will be triggered every Friday to update the dataset. This regular update process ensures that the platform reflects the latest information, as new contracts are often finalized or updated by the end of each week.
 
+### Table of Contents
+
+1. [Project Description](#project-description)
+2. [Technologies](#technologies)
+3. [Project Workflow](#project-workflow)
+4. [Triggers for Data Updates](#triggers-for-data-updates)
+5. [Dashboard Explanation](#dashboard-explanation)
+6. [Dataset Info](#dataset-info)
+7. [Terraform Configuration for Google Cloud Platform](#terraform-configuration-for-google-cloud-platform)
+8. [Reproducibility Steps](#reproducibility-steps)
+
 ### Technologies
 
 This project utilized the following tools:
