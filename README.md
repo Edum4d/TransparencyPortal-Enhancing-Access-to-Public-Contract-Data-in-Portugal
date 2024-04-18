@@ -55,7 +55,9 @@ The project workflow involved the following steps:
      1. Data type treatment.
      2. Handle the contract type column, which has the same issue as the cities, i.e., multiple contract types for a single contract ID.
      3. Trim columns that need it.
-     4. Create a partitioned and clustered fact table in BigQuery.
+     4. Translate contract_type column to english.
+     5. Replace message "NULL" with empty in columns
+     6. Create a partitioned and clustered fact table in BigQuery.
    ![Pipeline 3 - dbt_run](images/pipeline_3.jpg)
 
 4. **Pipeline 4 - Looker Report**:
@@ -85,6 +87,49 @@ The dashboard comprises two primary charts aimed at providing insights into publ
 
 2. **Clustering**: Clustering is implemented on the contract type column. This column often exhibits repeated values, as multiple contract types can be associated with a single contract ID. By clustering on this column, data retrieval and analysis related to contract types are optimized, improving the overall performance of queries and reports generated through Looker.
 
+1. **Contract Expenditure by Type:**
+   - **Goal:** This chart showcases the types of contracts that have incurred the highest expenditure in Portugal, offering a comprehensive overview of spending distribution across various contract categories.
+   - **Objective:** To provide stakeholders with a clear understanding of where public funds are allocated across different types of contracts, fostering transparency in government spending.
+
+2. **Expenditure by District:**
+   - **Goal:** This chart offers a detailed breakdown of expenditure by district, enabling users to discern regional spending patterns and trends.
+   - **Objective:** To empower users to analyze regional variations in public contract expenditure, facilitating informed decision-making and accountability at the local level.
+
+3. **Expenditure by Contractor:**
+   - **Goal:** This analysis provides insights into expenditure patterns by individual contractors, highlighting the top spenders and their contribution to overall public spending.
+   - **Objective:** To enable stakeholders to identify key contractors and assess their role in government expenditure, promoting transparency and accountability in public procurement.
+
+Additionally, the dashboard features interactive filters, allowing users to explore data based on contract type, district, or city, thereby enhancing the flexibility and usability of the platform.
+
+### Dataset Info: 
+
+**Description**: Public Contracts of 2024 - Information registered on the BASE Portal at www.base.gov.pt by the Contracting Authorities (directly and/or through Electronic Platforms).
+
+### Column Descriptions:
+
+1. **contract_id**: Unique identifier for each contract.
+2. **notice_number**: Identifier for the notice associated with the contract.
+3. **contract_type**: Type of contract (e.g., supply, service, works).
+4. **procedure_type**: Type of procurement procedure used.
+5. **contract_object**: Description of the contract's purpose or scope.
+6. **contracting_authority**: Entity responsible for awarding the contract.
+7. **contractors**: Companies or entities awarded the contract.
+8. **publication_date**: Date when the contract was published.
+9. **contract_conclusion_date**: Date when the contract was concluded.
+10. **contract_price**: Value of the contract.
+11. **cpv_code**: Common Procurement Vocabulary code describing the nature of the contract.
+12. **execution_period**: Timeframe for executing the contract.
+13. **country**: Country where the contract is executed.
+14. **district**: District within the country where the contract is executed.
+15. **city**: City or locality where the contract is executed.
+16. **justification**: Reasoning or justification provided for the contract.
+17. **centralized_procedure**: Indicates if the procurement process was centralized.
+18. **framework_agreement_description**: Description of any framework agreement associated with the contract.
+
+**Description**: Public Contracts of 2024 - Information registered on the BASE Portal at www.base.gov.pt by the Contracting Authorities (directly and/or through Electronic Platforms).
+
+Note: The data is primarily in Portuguese.
+
 
 # Terraform Configuration for Google Cloud Platform
 
@@ -98,15 +143,7 @@ This Terraform configuration provisions resources on Google Cloud Platform (GCP)
 
 
 
-1. **Contract Expenditure by Type:**
-   - **Goal:** This chart showcases the types of contracts that have incurred the highest expenditure in Portugal, offering a comprehensive overview of spending distribution across various contract categories.
-   - **Objective:** To provide stakeholders with a clear understanding of where public funds are allocated across different types of contracts, fostering transparency in government spending.
 
-2. **Expenditure by District:**
-   - **Goal:** This chart offers a detailed breakdown of expenditure by district, enabling users to discern regional spending patterns and trends.
-   - **Objective:** To empower users to analyze regional variations in public contract expenditure, facilitating informed decision-making and accountability at the local level.
-
-Additionally, the dashboard features interactive filters, allowing users to explore data based on contract type, district, or city, thereby enhancing the flexibility and usability of the platform.
 
 ## Reproducibility Steps
 
@@ -139,7 +176,7 @@ Ensure the credentials file is named appropriately and matches the path specifie
 
 Navigate to the `variables.tf` file and update the default values of the following variables to match your setup:
 
-- `project` - my default: `transparencyportal-420117`
+- `project` - my default: `google project id`
 - `region`- my default: `us-central1`
 - `location` - my default: `US`
 - `bq_dataset_name` - my default: `transparencyportal_bq`
@@ -224,12 +261,16 @@ Update the following variables in your `.env` file:
     Follow these steps to run the `mageai` Docker container:
 
     1. **Ensure Docker is Installed**: Make sure Docker is installed on your machine.
-
-    2. **Run Docker Compose**: Open a terminal or command prompt, navigate to your project directory, and execute `docker-compose up -d`. This command starts the Docker containers defined in the `docker-compose.yml` file in detached mode.
+    2. **Build Docker Image**: Open a terminal or command prompt, navigate to your project directory, and execute the following command to build the Docker image:
+    ```
+    docker-compose build
+    ```
+    2. **Run Docker Compose**: After the Docker image is built, execute the following command to start the Docker containers defined in the docker-compose.yml file:
+    ```
+    docker-compose up -d
+    ```
 
     3. **Access the Container**: Once the containers are running, access the `mageai` service at `http://localhost:6789` in your web browser.
-
-    That's it! You've successfully launched the `mageai` Docker container. Adjust the configuration and environment variables as needed for your specific setup.
 
 ### Step 10: Run Pipeline
 

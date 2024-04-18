@@ -26,7 +26,17 @@ renamed AS (
 SELECT 
     contract_id,
     notice_number,
-    TRIM(split_column) AS contract_type,
+        CASE 
+        WHEN TRIM(split_column) = 'Concessão de obras públicas' THEN 'Public works concession'
+        WHEN TRIM(split_column) = 'Aquisição de bens móveis' THEN 'Acquisition of movable goods'
+        WHEN TRIM(split_column) = 'Sociedade' THEN 'Society'
+        WHEN TRIM(split_column) = 'Empreitadas de obras públicas' THEN 'Public works contracts'
+        WHEN TRIM(split_column) = 'Concessão de serviços públicos' THEN 'Public services concession'
+        WHEN TRIM(split_column) = 'Aquisição de serviços' THEN 'Acquisition of services'
+        WHEN TRIM(split_column) = 'Outros' THEN 'Others'
+        WHEN TRIM(split_column) = 'Locação de bens móveis' THEN 'Rental of movable goods'
+        ELSE TRIM(split_column)
+    END AS contract_type,
     procedure_type,
     contract_object,
     contracting_authority,
