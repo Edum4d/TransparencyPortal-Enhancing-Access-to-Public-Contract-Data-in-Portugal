@@ -13,16 +13,45 @@ Our project aims to facilitate informed decision-making, enhance transparency, a
 
 
 ### Technologies
-This project used the tool below.
 
-Mage as Batch data / Workflow orchestration
-DBT core as a data transformation tool for data warehouse
-Terraform as infrastructure setup, management and reproducibility
-Docker for hosting Prefect Agent
-Google Cloud Storage Bucket as a data lake.
-Google BigQuery as a Data warehouse
-Looker Studio for report and visualization
+This project utilized the following tools:
 
+- **Mage**: Batch data/workflow orchestration tool.
+- **DBT Core**: Data transformation tool for the data warehouse.
+- **Terraform**: Infrastructure setup, management, and reproducibility.
+- **Docker**: Hosting Prefect Agent.
+- **Google Cloud Storage (GCS) Bucket**: Used as a data lake.
+- **Google BigQuery**: Data warehouse.
+- **Looker Studio**: Reporting and visualization.
+
+### Project Workflow
+
+The project workflow involved the following steps:
+
+1. **Creating Pipelines**:
+   - **Pipeline 1 - url_to_gcs**:
+     1. Get data from URLs.
+     2. Clean the data.
+        - 2.1 Convert columns to the correct data types.
+        - 2.2 Rename columns to English.
+        - 2.3 Handle contracts spanning multiple cities, with multiple cities listed in a single row for a contract ID.
+     3. Send data to Google Cloud Storage.
+    ![Pipeline 1 - url_to_gcs](images\pipeline_1.jpg)
+   - **Pipeline 2 - gcs_to_bq**:
+     1. Retrieve data from Google Cloud Storage.
+     2. Send the data to BigQuery.
+     3. Trigger the dbt_run pipeline.
+    ![Pipeline 2 - gcs_to_bq](images\pipeline_2.jpg)
+   - **Pipeline 3 - dbt_run**:
+     1. Data type treatment.
+     2. Handle the contract type column, which has the same issue as the cities, i.e., multiple contract types for a single contract ID.
+     3. Trim columns that need it.
+     4. Create a partitioned and clustered fact table.
+     ![Pipeline 3 - gcs_to_bq](images\pipeline_3.jpg)
+
+### Terraform Usage
+
+Terraform was utilized to provision the necessary resources on Google Cloud Platform (GCP). After setup, MageAI was used for easy setup and orchestration of all pipelines.
 
 # Terraform Configuration for Google Cloud Platform
 
@@ -34,8 +63,23 @@ This Terraform configuration provisions resources on Google Cloud Platform (GCP)
 2. **Service Account**: Create a service account and download the JSON key file. Ensure that this service account has the necessary permissions to create resources like Google Cloud Storage buckets and BigQuery datasets.
 3. **Terraform Installed**: Make sure you have Terraform installed on your machine. You can download it from [Terraform's official website](https://www.terraform.io/downloads.html).
 
-## Steps
+## Dashboard Explanation
 
+If you wish to access the final dashboard, you can find the link [here](https://lookerstudio.google.com/reporting/33c3a880-4602-4cf2-842f-4312d7dbfc56).
+If for any reason you are unable to access the dashboard, GitHub includes a PDF named "Transparency_Portal_Portugal" containing the dashboard.
+The dashboard comprises two primary charts aimed at providing insights into public contract expenditure:
+
+1. **Contract Expenditure by Type:**
+   - **Goal:** This chart showcases the types of contracts that have incurred the highest expenditure in Portugal, offering a comprehensive overview of spending distribution across various contract categories.
+   - **Objective:** To provide stakeholders with a clear understanding of where public funds are allocated across different types of contracts, fostering transparency in government spending.
+
+2. **Expenditure by District:**
+   - **Goal:** This chart offers a detailed breakdown of expenditure by district, enabling users to discern regional spending patterns and trends.
+   - **Objective:** To empower users to analyze regional variations in public contract expenditure, facilitating informed decision-making and accountability at the local level.
+
+Additionally, the dashboard features interactive filters, allowing users to explore data based on contract type, district, or city, thereby enhancing the flexibility and usability of the platform.
+
+## Reproducibility Steps
 
 
 ### 1. Clone the Repository and Navigate to the Terraform Directory
@@ -178,7 +222,7 @@ To execute the entire pipeline, follow these steps:
 
     A pipeline trigger is set to run automatically every Friday. 
 
-5. Destroy Resources (Optional)
+### Step 11: If you want to delete Cloud Resources (Optional)
 If you want to delete the resources created by Terraform, you can run:
 ```
 terraform destroy
