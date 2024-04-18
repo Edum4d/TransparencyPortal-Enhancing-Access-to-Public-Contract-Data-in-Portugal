@@ -179,10 +179,15 @@ git clone https://github.com/Edum4d/TransparencyPortal-Enhancing-Access-to-Publi
 
 Before proceeding, ensure you place your Google Cloud Platform (GCP) service account credentials file within a directory of the project. For example, create a directory named `keys` within the `terraform` directory and place your credentials file there. 
 
+```
+cd terraform
+mkdir secrets
+```
+
 Example directory structure:
 ```
 terraform/
-├── secret/
+├── secrets/
 │ └── go-de-zoomcamp-project-2024.json
 ├── main.tf
 ├── variables.tf
@@ -201,7 +206,7 @@ Navigate to the `variables.tf` file and update the default values of the followi
 - `location` - my default: `US`
 - `bq_dataset_name` - my default: `transparencyportal_bq`
 - `gcs_bucket_name` - my default: `transparencyportal_bucket`
-- `credentials`: Update this variable with the path to your Google Cloud service account credentials JSON file. For example, if you placed your credentials file in a directory named keys within the terraform directory, the path would be `./secret/go-de-zoomcamp-project-2024.json`.
+- `credentials`: Update this variable with the path to your Google Cloud service account credentials JSON file. For example, if you placed your credentials file in a directory named keys within the terraform directory, the path would be `./secrets/go-de-zoomcamp-project-2024.json`.
 
 ### 4. Modify Configuration
 
@@ -246,6 +251,7 @@ Copy the dev.env file to create a new file named .env. This new file will contai
 
 ```
 cp dev.env .env
+mkdir secrets
 ```
 
 After copying, open the .env file and update the GCP credentials to match the credentials set up in `terraform/variables.tf`. Ensure that the credentials match to avoid any authentication issues during project execution.
